@@ -1,22 +1,29 @@
 package com.flo.snakePlus;
-//
-//import javafx.scene.input.KeyCode;
-//
-public class Snake{
-//
-////    Player owner;
-//
+
+public class Snake {
+
+//    Player owner;
+
     private Coordinate[] elements;
-//    private int length = 0;
-//    private KeyCode nextDirection = KeyCode.DOWN;
-//    private KeyCode lastDirection = nextDirection;
-//
+    private int length = 0;
+
     public Snake() {
 
         elements = new Coordinate[100];
-        elements[0] = new Coordinate(1, 1);
+        claimTile(new Coordinate(9, 9));
 
     }
+
+    public void claimTile(Coordinate coord) {
+        if (length == 0) {
+            elements[0] = coord;
+            length++;
+            MainGameFrame.field.getTile(coord).changeOwner();
+        } else {
+
+        }
+    }
+}
 //
 //    public void addElement(int x, int y) { //works as intended
 //        if (length != 0) {
@@ -97,4 +104,4 @@ public class Snake{
 //        lastDirection = input;
 //        return false;
 //    }
-}
+

@@ -1,40 +1,55 @@
 package com.flo.snakePlus;
 
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-public class MainGameFrame {
+public class MainGameFrame extends Application {
 
-    private TileGrid field;
-//    private Snake s1;
     private GameMenu gameMenu;
+    public static TileGrid field;
+    private Snake s1;
 
     public void start(Stage primaryStage) throws Exception {
 
         Pane root = new Pane();
         root.setPrefSize(602, 602);
 
-        field = new TileGrid(10, 8);
-//        s1 = new Snake();
-
         gameMenu = new GameMenu();
+        field = new TileGrid(20, 20);
+        s1 = new Snake();
+
         gameMenu.setVisible(false);
+
+        Scene scene = new Scene(root);
+
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                gameMenu.toggleMenu();
+            }
+        });
+//        scene.setOnMouseReleased(event1 -> field.getTile(new Coordinate(3, 5)).posessed());
+
+        root.getChildren().addAll(field, gameMenu);
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Snake+");
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
 
 //        s1.addElement(1, 1);
 //        s1.move(KeyCode.DOWN);
 //        s1.addElement(new Coordinate(1, 3));
 //        s1.addElement(new Coordinate(1, 4));
 
-        root.getChildren().addAll(field/*, s1*/, gameMenu);
 
-        Scene scene = new Scene(root);
 //        scene.setOnKeyPressed(event -> s1.setNextDirection(event.getCode()));
 
 //        Timeline run = new Timeline(
@@ -42,6 +57,8 @@ public class MainGameFrame {
 //        );
 //        run.setCycleCount(Animation.INDEFINITE);
 //        run.play();
+//        s1.claimTile();
+//        scene.setOnKeyPressed(event -> s1.claimTile());
 
 //        scene.setOnKeyPressed(event -> {
 //            s1.setNextDirection(event.getCode());
@@ -66,10 +83,7 @@ public class MainGameFrame {
 //            }
 //        });
 
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Snake+");
-        primaryStage.show();
-    }
+//    }
 
 //    public static void main(String[] args) {
 //        launch(args);
@@ -84,4 +98,4 @@ public class MainGameFrame {
 //        run.play();
 //    }
 
-}
+

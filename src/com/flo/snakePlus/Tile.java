@@ -26,6 +26,21 @@ public class Tile extends StackPane {
         setTranslateX(coord.getX() * size);
         setTranslateY(coord.getY() * size);
 
+        setOnMouseClicked(event -> getLocationOnClick());
+
         getChildren().addAll(rc);
+    }
+
+    public void changeOwner() {
+        rc.setFill(Color.BLACK);
+    }
+
+    public void setFree() {
+        rc.setFill(Color.WHITE);
+    }
+
+    public Coordinate getLocationOnClick() {
+        System.out.println(location.getX() + " / " + location.getY());
+        return location;
     }
 }

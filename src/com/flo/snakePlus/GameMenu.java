@@ -1,6 +1,6 @@
 package com.flo.snakePlus;
 
-import javafx.animation.FadeTransition;
+import javafx.animation.*;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
@@ -24,11 +24,7 @@ public class GameMenu extends Parent {
 
         MenuButton bntResume = new MenuButton("RESUME");
         bntResume.setOnMouseClicked(event -> {
-            FadeTransition ft = new FadeTransition(Duration.seconds(0.5), this);
-            ft.setFromValue(1);
-            ft.setToValue(0);
-            ft.setOnFinished(event1 -> this.setVisible(false));
-            ft.play();
+            closeMenu();
         });
 
         MenuButton bntExit = new MenuButton("EXIT");
@@ -37,14 +33,40 @@ public class GameMenu extends Parent {
         });
 
         TextField title = new TextField("Menu");
+        title.setScaleX(3);
+        title.setScaleY(3);
 
         menu0.getChildren().addAll(title, bntResume, bntExit);
 
         Rectangle rc = new Rectangle(1152, 648);
-        rc.setOpacity(0.4);
+        rc.setOpacity(0.9);
         rc.setFill(Color.GRAY);
 
         getChildren().addAll(rc, menu0);
+    }
+
+    public void openMenu() {
+        FadeTransition ft = new FadeTransition(Duration.seconds(0.5), this);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        this.setVisible(true);
+        ft.play();
+    }
+
+    public void closeMenu() {
+        FadeTransition ft = new FadeTransition(Duration.seconds(0.5), this);
+        ft.setFromValue(1);
+        ft.setToValue(0);
+        ft.setOnFinished(event1 -> this.setVisible(false));
+        ft.play();
+    }
+
+    public void toggleMenu() {
+        if (!this.isVisible()) {
+            openMenu();
+        } else {
+            closeMenu();
+        }
     }
 
     private static class MenuButton extends StackPane {
@@ -66,15 +88,31 @@ public class GameMenu extends Parent {
             getChildren().addAll(rc, text);
 
             setOnMouseEntered(event -> {
-                rc.setTranslateX(20);
-                text.setTranslateX(30);
+                TranslateTransition tt = new TranslateTransition();
+                tt.setNode(rc);
+                tt.setDuration(Duration.millis(200));
+                tt.setToX(20);
+                TranslateTransition tt2 = new TranslateTransition();
+                tt2.setNode(text);
+                tt2.setDuration(Duration.millis(200));
+                tt2.setToX(30);
+                tt.play();
+                tt2.play();
                 rc.setFill(Color.WHITE);
                 text.setFill(Color.BLACK);
             });
 
             setOnMouseExited(event -> {
-                rc.setTranslateX(0);
-                text.setTranslateX(10);
+                TranslateTransition tt = new TranslateTransition();
+                tt.setNode(rc);
+                tt.setDuration(Duration.millis(200));
+                tt.setToX(0);
+                TranslateTransition tt2 = new TranslateTransition();
+                tt2.setNode(text);
+                tt2.setDuration(Duration.millis(200));
+                tt2.setToX(10);
+                tt.play();
+                tt2.play();
                 rc.setFill(Color.BLACK);
                 text.setFill(Color.WHITE);
             });
